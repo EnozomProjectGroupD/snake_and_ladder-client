@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link , useNavigate } from "react-router-dom";
+import React, {  useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Signup() {
-  const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
 
@@ -24,13 +23,12 @@ export default function Signup() {
       const response = await axios.post("http://localhost:3000/api/user/sign-up", formData);
       const data = response.data;
   
-      setApiData(data);
        SuccessToast(data.message )
       console.log(data);
 
       console.log(data.message)
       console.log(data.token)
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds
+      await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
 
       navigate("/login");
     } catch (error) {

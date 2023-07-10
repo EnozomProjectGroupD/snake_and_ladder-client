@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login() {
-  const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
   
@@ -26,12 +25,11 @@ export default function Login() {
       const response = await axios.post("http://localhost:3000/api/user/log-in", formData);
       const data = response.data;
   
-      setApiData(data);
-      console.log(data);
+      // console.log(data);
       SuccessToast('Redirecting to game..')
-      // console.log(data.token)
       localStorage.setItem('userToken',data.token)
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds
+      localStorage.setItem('userName',data.user.name)
+      await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
       navigate("/game");
     } catch (error) {
       console.log(error);

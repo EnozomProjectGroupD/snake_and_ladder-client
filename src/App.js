@@ -5,7 +5,8 @@ import Layout from "./components/Layout";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
 import Game from "./components/Game";
-import ProtectedROute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Startgame from "./components/Startgame";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,11 +20,12 @@ function App() {
         {
           path: "/game",
           element: (
-            <ProtectedROute>
+            <ProtectedRoute>
               <Game></Game>
-            </ProtectedROute>
+            </ProtectedRoute>
           ),
         },
+        { path: "/startgame", element: <Startgame></Startgame> },
       ],
     },
   ]);
