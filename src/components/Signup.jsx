@@ -87,7 +87,6 @@ export default function Signup() {
             className="w-75"
             required
           />
-          {/* <p className="text-danger">{apiData.error.message}</p> */}
 { loading? 
           <button type="submit" className="btn btn-outline-danger my-2 w-50">
            <i className="fas fa-spinner fa-spin mx-2"></i>Signup

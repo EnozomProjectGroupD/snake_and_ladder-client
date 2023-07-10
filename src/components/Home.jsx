@@ -14,7 +14,12 @@ export default function home() {
 <p className='fw-bold fs-2'>
    Unleash your competitive spirit and climb to victory with our addictive Snake and Ladder game
 </p>
+{localStorage.getItem('userToken')?
+<Link className='btn btn-danger rounded-5 fs-3' to={'/game'}>Play Now!</Link>
+
+:
 <Link className='btn btn-danger rounded-5 fs-3' to={'/login'}>Play Now!</Link>
+}
     </div>
     <div className='col-md-6'>
       <img src={logo} alt='game logo' className='w-100'/>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 // import { styled } from 'styled-components';
 
 
@@ -10,13 +10,13 @@ import { Link} from "react-router-dom";
 // `
 export default function Navbar() {
     //*use navigate for logout
-// const navigate = useNavigate ()
-//   function logOut(){
+const navigate = useNavigate ()
+  function logOut(){
 
-//   localStorage.removeItem("userToken")
-//   navigate('login')
+  localStorage.removeItem("userToken")
+  navigate('login')
   
-// }
+}
 
 
   return (
@@ -42,22 +42,22 @@ export default function Navbar() {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
           
-          {/* {localStorage.getItem('userToken')?
+          {localStorage.getItem('userToken')?
           <>
          
-            </>:""} */}
+            </>:""}
             <div className="ms-auto">
 
-              {/* {localStorage.getItem('userToken')? <Link className="btn btn-outline-dark mx-2" onClick={logOut}>
+              {localStorage.getItem('userToken')? <Link className="btn btn-outline-dark mx-2" onClick={logOut}>
                 Logout
-              </Link>:  (<> */}
-                {/* <Link className="text-decoration-none text-dark mx-2" to={"/"}> */}
+              </Link>:  (<>
+                <Link className="text-decoration-none text-dark mx-2" to={"/"}>
                 
-              {/* </Link> */}
+              </Link>
               <Link className="btn btn-secondary mx-2 fw-bold " to={"/login"}>
                 Login
               </Link>
-              {/* </>)} */}
+              </>)}
              
             
             </div>
