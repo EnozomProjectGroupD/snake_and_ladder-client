@@ -30,7 +30,7 @@ export default function Login() {
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
       await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
-      navigate("/game");
+      navigate("/startgame");
     } catch (error) {
       console.log(error);
       errorToast(error.response.data.message )
