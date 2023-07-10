@@ -32,40 +32,42 @@ export default function Startgame() {
       console.log(response.data.boards);
       SuccessToast(response.data.message);
 
-      setApiData(response.data.boards);
+      setApiData(response.data.boards)
     } catch (error) {
-      ErrorToast(error.message);
+      ErrorToast(error.response.data);
       console.error(error);
     }
   }
 
-  useEffect(() => {
-    getGame();
-  }, []);
-
+//   useEffect(() => {
+//     getGame();
+//   }, []);
+console.log(apiData.length)
+console.log(apiData)
   return (
     <>
       <ToastContainer />
-      <div className="d-flex align-items-center justify-content-center vh-100 flex-column">
-        <h3>Press the button to start</h3>
-        <Link className="btn btn-primary w-25 my-4" onClick={getGame}>
-          Startgame
-        </Link>
-      </div>
-      {apiData.length ? (
-        <div className="container text-center">
+    <div className="d-flex align-items-center justify-content-center vh-100 flex-column">
+ <h3>Press the button to start</h3>
+ <Link className="btn btn-primary w-25 my-4" onClick={getGame}>
+   Start game
+ </Link>
+</div>
+       
+   
+
+      <div className="container text-center">
           <h1 className="my-2">Choose your board</h1>
           <div className="row justify-content-center align-items-center text-decoration-none">
             {apiData.map((board, index) => (
               <div className="col-md-6" key={index}>
-                <Link to={`/board/${board.id}`}>
+                <Link > 
                   <h3>Board No. {board.id}</h3>
                 </Link>
               </div>
             ))}
           </div>
         </div>
-      ) : null}
     </>
   );
 }
