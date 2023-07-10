@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Signup() {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate()
+
+  const SuccessToast = (event) => toast.success(event, {
+    position: 'top-center',});
+  const errorToast = (event) => toast.error(event, {
+    position: 'top-center',});
+
 
   async function handleSignup(formData) {
     setLoading(true);
@@ -17,10 +25,18 @@ export default function Signup() {
       const data = response.data;
   
       setApiData(data);
+       SuccessToast(data.message )
       console.log(data);
+
+      console.log(data.message)
+      console.log(data.token)
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds
+
       navigate("/login");
     } catch (error) {
       console.log(error);
+      errorToast(error.response.data.message )
+      console.log(error.response.data.message )       
     }
   
     setLoading(false);
@@ -38,15 +54,14 @@ export default function Signup() {
     handleSignup(formData);
   }
 
-  // useEffect(() => {
-  //   handleSignup()
-  // }, []);
-
+  
   return (
     <>
       <Helmet>
         <title>Signup</title>
       </Helmet>
+    <ToastContainer />
+
       <div className="align-items-center justify-content-center d-flex vh-100 flex-column">
         <h2>Sign up:</h2>
         <form

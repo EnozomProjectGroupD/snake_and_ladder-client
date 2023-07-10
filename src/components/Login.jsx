@@ -1,41 +1,54 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { Link, Navigate } from 'react-router-dom'
+import {Link,  useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login() {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
-  async function handleSignup(formData) {
+  const navigate = useNavigate()
+  
+
+  const SuccessToast = (event) => toast.success(event, {
+    position: 'top-center',});
+  const errorToast = (event) => toast.error(event, {
+    position: 'top-center',});
+
+
+
+  async function handleLogin(formData) {
+    setLoading(true);
+  
     try {
-      const { data } = await axios.post(
-        "http://localhost:3000/api/user/log-in",
-        formData
-      );
-      setLoading(true)
+      const response = await axios.post("http://localhost:3000/api/user/log-in", formData);
+      const data = response.data;
+  
       setApiData(data);
       console.log(data);
-      Navigate ("/game")
-      setLoading(false)
-      
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+      SuccessToast('Redirecting to game..')
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds
 
+      navigate("/game");
+    } catch (error) {
+      console.log(error);
+      errorToast(error.response.data.message )
+      console.log(error.response.data.message ) 
+   }
+  
+    setLoading(false);
+  }
   function handleSubmit(event) {
     event.preventDefault();
     const formData = {
       username: event.target.username.value,
       password: event.target.password.value,
     };
-    handleSignup(formData);
+    console.log(formData)
+    handleLogin(formData);
   }
-
-  useEffect(() => {
-    handleSignup();
-  }, []);
 
 
   return (
@@ -43,18 +56,29 @@ export default function Login() {
   <Helmet>
       <title>Login</title>
     </Helmet>
+    <ToastContainer />
+
     <div className='row'>
       <div className='col-md-6'></div>
     <div className='align-items-center justify-content-center d-flex vh-100 flex-column '>
    <h2>Login:</h2>
-    <form className='form-control w-50 text-center d-flex flex-column align-items-center'>
+    <form className='form-control w-50 text-center d-flex flex-column align-items-center '   onSubmit={handleSubmit}>
+    <label htmlFor="username" className="my-2">
       
-        <label for="name"className='my-2'>User Name:</label>
-        <input type="text" id="name" name="name" className='w-75' required/>
+    User Name:
+          </label>
+          <input type="text"   id="username" name="username" className="w-75"required   />
 
-        <label for="password" className='my-2'>Password:</label>
-        <input type="password" id="password" name="password" className='w-75' required/>
-
+          <label htmlFor="password" className="my-2">
+            Password:
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="w-75"
+            required
+          />
         { loading? 
           <button type="submit" className="btn btn-outline-danger my-2 w-50">
            <i className="fas fa-spinner fa-spin mx-2"></i>Login
