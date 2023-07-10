@@ -29,8 +29,9 @@ export default function Login() {
       setApiData(data);
       console.log(data);
       SuccessToast('Redirecting to game..')
+      // console.log(data.token)
+      localStorage.setItem('userToken',data.token)
       await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds
-
       navigate("/game");
     } catch (error) {
       console.log(error);
