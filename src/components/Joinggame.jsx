@@ -42,7 +42,9 @@ export default function Joinggame() {
     await joinGame(requestData);
   };
 
-  // Join game
+
+//    Join game 
+/// get all boards and enter the players amount
   async function joinGame(requestData) {
     try {
       const apiUrl = "http://localhost:3000/api/player/create";
@@ -62,7 +64,7 @@ export default function Joinggame() {
   return (
     <>
       <Helmet>
-        <title>Choosing id</title>
+        <title>Choosing room</title>
       </Helmet>
       <ToastContainer />
       <div
@@ -104,7 +106,7 @@ export default function Joinggame() {
                   <td>{game.status}</td>
                   <td>
                     <Link
-                      to={`/game/${game.id}`}
+                      to={`/playground/${game.id}`}
                       className="btn btn-primary w-100 mb-2"
                     >
                       Join game

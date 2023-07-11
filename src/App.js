@@ -7,6 +7,8 @@ import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Startgame from "./components/Startgame";
 import Joinggame from "./components/Joinggame";
+import Playground from './components/Playground';
+import Snakeandladder from './components/Boards/Snakeandladder';
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +19,7 @@ function App() {
         { index: true, element: <Home></Home> },
         { path: "/login", element: <Login></Login> },
         { path: "/signup", element: <Signup></Signup> },
+        { path: "/snake", element: <Snakeandladder></Snakeandladder> },
 
         {
           path: "/startgame",
@@ -31,6 +34,14 @@ function App() {
           element: (
             <ProtectedRoute>
               <Joinggame></Joinggame>
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/playground/:id",
+          element: (
+            <ProtectedRoute>
+              <Playground></Playground>
             </ProtectedRoute>
           ),
         },
