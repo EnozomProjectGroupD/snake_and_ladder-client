@@ -15,7 +15,7 @@ export default function home() {
    Unleash your competitive spirit and climb to victory with our addictive Snake and Ladder game
 </p>
 {localStorage.getItem('userToken')?
-<Link className='btn btn-danger rounded-5 fs-3' to={'/game'}>Play Now!</Link>
+<Link className='btn btn-danger rounded-5 fs-3' to={'/startgame'}>Play Now!</Link>
 
 :
 <Link className='btn btn-danger rounded-5 fs-3' to={'/login'}>Play Now!</Link>
