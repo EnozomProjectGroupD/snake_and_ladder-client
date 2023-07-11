@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Newgame from "./Newgame";
 
 export const authToken = localStorage.getItem("userToken");
-export const decodedToken = jwtDecode(authToken);
+//!delete
+// export const decodedToken = jwtDecode(authToken);
 
 // Toasts
 export const SuccessToast = (event) =>
@@ -26,7 +27,8 @@ export default function Startgame() {
   const [hide, setHide] = useState(true);
 
   // Decode token
-  console.log(decodedToken.id);
+  //!delete
+  // console.log(decodedToken.id);
 
   // Get all boards
   async function getAllboards() {

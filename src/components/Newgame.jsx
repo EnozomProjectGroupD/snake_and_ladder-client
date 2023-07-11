@@ -9,7 +9,7 @@ export default function Newgame({ apiData, hide }) {
 
   const getCreateData = async () => {
     const requestData = {
-      creator_id: decodedToken.id,
+      // creator_id: decodedToken.id,
       board_id: selectedBoardId,
       players_number: parseInt(numberOfPlayers),
     };
