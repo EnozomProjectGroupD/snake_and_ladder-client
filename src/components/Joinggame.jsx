@@ -61,7 +61,7 @@ export default function Joinggame() {
 
       console.log(data);
       SuccessToast(data.message);
-      navigate(`/playground/${requestData.game_id}`)
+      navigate(`/creatorroom/${requestData.game_id}`)
     } catch (error) {
       console.error(error);
     }
@@ -128,7 +128,7 @@ export default function Joinggame() {
                   <td>{game.status}</td>
                   <td>
                     <Link
-                      to={`/playground/${game.id}`}
+                      to={`/creatorroom/${game.id}`}
                       className="btn btn-primary w-100 mb-2"
                     >
                       Join game

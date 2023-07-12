@@ -11,6 +11,7 @@ import Playground from './components/Playground';
 import Snakeandladder from './components/Game/Snakeandladder';
 import NotFound from "./components/NotFound/NotFound";
 import Newgame from "./components/Newgame";
+import CreatorRoom from "./components/CreatorRoom";
 
 function App() {
   const router = createBrowserRouter([
@@ -52,6 +53,22 @@ function App() {
           element: (
             <ProtectedRoute>
               <Newgame></Newgame>
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/newgame",
+          element: (
+            <ProtectedRoute>
+              <Newgame></Newgame>
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/creatorroom/:id",
+          element: (
+            <ProtectedRoute>
+              <CreatorRoom></CreatorRoom>
             </ProtectedRoute>
           ),
         },

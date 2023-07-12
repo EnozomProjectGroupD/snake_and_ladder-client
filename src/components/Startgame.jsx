@@ -1,10 +1,10 @@
-import axios from "axios";
-import React, { useState } from "react";
+// import axios from "axios";
+import React from "react";
 import { Helmet } from "react-helmet";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Newgame from "./Newgame";
+// import Newgame from "./Newgame";
 
 export const authToken = localStorage.getItem("userToken");
 
@@ -22,9 +22,9 @@ export const ErrorToast = (event) =>
 
 export default function Startgame() {
 
-  const [apiData, setApiData] = useState([]);
-  const [hide, setHide] = useState(true);
-const navigate = useNavigate()
+  // const [apiData, setApiData] = useState([]);
+  // const [hide, setHide] = useState(true);
+// const navigate = useNavigate()
   
 
   // Get all boards
@@ -60,8 +60,8 @@ const navigate = useNavigate()
 
       <div
         className={
-          "align-items-center justify-content-center vh-100 flex-column " +
-          (hide ? "d-flex" : "d-none")
+          "align-items-center justify-content-center vh-100 flex-column d-flex" 
+        
         }
       >
         <h3>Press the button to start</h3>
@@ -83,7 +83,7 @@ const navigate = useNavigate()
      
       </div>
 
-      <Newgame apiData={apiData} hide={hide}></Newgame>
+      {/* <Newgame apiData={apiData} ></Newgame> */}
     </>
   );
 }
