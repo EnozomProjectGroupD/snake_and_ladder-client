@@ -1,5 +1,4 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
@@ -8,8 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Newgame from "./Newgame";
 
 export const authToken = localStorage.getItem("userToken");
-//!delete
-// export const decodedToken = jwtDecode(authToken);
 
 // Toasts
 export const SuccessToast = (event) =>
@@ -26,9 +23,7 @@ export default function Startgame() {
   const [apiData, setApiData] = useState([]);
   const [hide, setHide] = useState(true);
 
-  // Decode token
-  //!delete
-  // console.log(decodedToken.id);
+  
 
   // Get all boards
   async function getAllboards() {

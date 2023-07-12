@@ -1,22 +1,32 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { ErrorToast, SuccessToast, authToken, decodedToken } from './Startgame';
+import { ErrorToast, SuccessToast, authToken } from './Startgame';
 import { Link } from 'react-router-dom';
 
 export default function Newgame({ apiData, hide }) {
   const [numberOfPlayers, setNumberOfPlayers] = useState('');
   const [selectedBoardId, setSelectedBoardId] = useState('');
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const getCreateData = async () => {
+    setIsFormSubmitted(true);
+
+    if (numberOfPlayers.trim() === '') {
+      return;
+    }
+
     const requestData = {
       // creator_id: decodedToken.id,
       board_id: selectedBoardId,
       players_number: parseInt(numberOfPlayers),
     };
-    console.log(requestData)
+
+    console.log(requestData);
     await createGame(requestData);
   };
 
+
+  // create game function
   async function createGame(requestData) {
     try {
       const apiUrl = "http://localhost:3000/api/game/create";
@@ -35,7 +45,7 @@ export default function Newgame({ apiData, hide }) {
     }
   }
 
-  console.log(apiData);
+  // console.log(apiData);
 
   return (
     <>
@@ -58,9 +68,13 @@ export default function Newgame({ apiData, hide }) {
               <label htmlFor="number">Number of players</label>
               <input
                 type="number"
-                value={numberOfPlayers} required
+                value={numberOfPlayers}
                 onChange={(e) => setNumberOfPlayers(e.target.value)}
+                required
               />
+              {isFormSubmitted && numberOfPlayers.trim() === '' && (
+                <p className="text-danger">Number of players is required.</p>
+              )}
               <div className="text-center">
                 <Link className="btn btn-primary my-5 w-50" onClick={getCreateData}>
                   Create game

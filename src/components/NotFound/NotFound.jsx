@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../assets/404 error.png'
+import logo from '../../assets/404 error.png'
 
 export default function NotFound() {
   return (

@@ -1,31 +1,41 @@
-import React from 'react'
-import  axios  from 'axios';
-import { authToken } from './Startgame';
+import React, { useState } from 'react';
+import dice1 from '../assets/dice/dice1.png';
+import dice2 from '../assets/dice/dice2.png';
+import dice3 from '../assets/dice/dice3.png';
+import dice4 from '../assets/dice/dice4.png';
+import dice5 from '../assets/dice/dice5.png';
+import dice6 from '../assets/dice/dice6.png';
 
-export default function Rolldice(id) {
+export default function RollDice() {
+  const [diceImage, setDiceImage] = useState(null);
+  const [isRolling, setIsRolling] = useState(false);
 
+  const rollDice = () => {
+    setIsRolling(true);
 
-    async function movePlayer(id) {
-        try {
-          const { data } = await axios.get(`http://localhost:3000/api/player/move`,{gameId:id},{
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          });
-          console.log(data);
-        } catch (error) {
-          console.log(error);
-        }
+    const diceImages = [dice1, dice2, dice3, dice4, dice5, dice6];
+    let rollCount = 0;
+
+    const rollInterval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * diceImages.length);
+      setDiceImage(diceImages[randomIndex]);
+      rollCount++;
+
+      if (rollCount >= 10) {
+        clearInterval(rollInterval);
+        setIsRolling(false);
       }
-
-
-
+    }, 200);
+  };
 
   return (
     <div>
-        
-
-        <button onClick={movePlayer}>click</button>
+      <button onClick={rollDice} disabled={isRolling}>
+        Roll Dice
+      </button>
+      <div>
+        {diceImage && <img src={diceImage} alt="dice" />}
+      </div>
     </div>
-  )
+  );
 }

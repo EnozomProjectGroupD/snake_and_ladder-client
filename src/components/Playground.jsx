@@ -31,8 +31,7 @@ const boardId =apiData
   return (<>
   <button onClick={getPlayground}>here</button>
   {id}
-  {/* <Rolldice id= {id}></Rolldice> */}
- 
 <ActiveBoard boardId={boardId} ></ActiveBoard>
+<Rolldice  id={id}></Rolldice>
   </>);
 }

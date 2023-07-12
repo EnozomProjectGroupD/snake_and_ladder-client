@@ -9,7 +9,7 @@ import Startgame from "./components/Startgame";
 import Joinggame from "./components/Joinggame";
 import Playground from './components/Playground';
 import Snakeandladder from './components/Boards/Snakeandladder';
-import NotFound from "./components/NotFound";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   const router = createBrowserRouter([
