@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
 import { ErrorToast, SuccessToast, authToken } from "./Startgame";
@@ -29,22 +29,30 @@ export default function Joinggame() {
       setLoading(false);
     } catch (error) {
       ErrorToast(error.response.data);
+      setLoading(false);
       console.log(error);
     }
-  }
+    setLoading(false);
 
+  }
+//get all games when load
+useEffect(() => {
+  getAllRooms()
+ }, [])
+ 
   // Get data for joining game
   const getJoinData = async () => {
     const requestData = {
       game_id: parseInt(game_id),
     };
-    console.log(game_id);
+    // console.log(game_id);
     await joinGame(requestData);
   };
 
 
 //    Join game 
 /// get all boards and enter the players amount
+//!delete
   async function joinGame(requestData) {
     try {
       const apiUrl = "http://localhost:3000/api/player/create";
@@ -86,6 +94,7 @@ export default function Joinggame() {
           </button>
         )}
       </div>
+      {/* ************************************************ */}
       <div className="align-items-center justify-content-center flex-column d-flex">
         {apiData.length ? (
           <table className="table my-3">
@@ -117,6 +126,21 @@ export default function Joinggame() {
             </tbody>
           </table>
         ) : null}
+        {/* ****************************************************************** */}
+        <label htmlFor="">enter game id</label>
+        <input
+  type="number"
+  id=""
+  value={game_id}
+  onChange={(e) => setGameId(e.target.value)}
+  required
+/>
+        <Link
+                      to={`/playground/${game_id}`}
+                      className="btn btn-primary w-100 mb-2"
+                    >
+                      enter game id
+                    </Link>
       </div>
     </>
   );

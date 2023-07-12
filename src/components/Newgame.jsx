@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 export default function Newgame({ apiData, hide }) {
   const [numberOfPlayers, setNumberOfPlayers] = useState('');
   const [selectedBoardId, setSelectedBoardId] = useState('');
+  // const [boardData, setBoardData] = useState([]);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
 
   const getCreateData = async () => {
     setIsFormSubmitted(true);
@@ -47,6 +49,18 @@ console.log(apiData.data)
 
   // console.log(apiData);
 
+  // const convertToBase64 = (arrayBuffer) => {
+  //   const base64String = btoa(
+  //     new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+  //   );
+  //   console.log(base64String)
+  //   return base64String;
+  // };
+
+  // const base64String = apiData.board?.Buffer?.data
+  //   ? convertToBase64(apiData.board.Buffer.data)
+  //   : '';
+
   return (
     <>
       <div className={!hide ? "d-block" : "d-none"}>
@@ -64,7 +78,8 @@ console.log(apiData.data)
                   />
                   <span>{`Board NO. ${board.id}`}</span>
                 </div>
-                // <img src={board.data} alt="" />
+                      // {base64String && <img src={`data:image/png;base64,${base64String}`} className="w-50" alt="boardpic" />}
+
               ))}
               <label htmlFor="number">Number of players</label>
               <input

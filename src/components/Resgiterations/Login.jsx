@@ -19,11 +19,10 @@ export default function Login() {
       const {data} = await axios.post("http://localhost:3000/api/user/log-in", formData);
       console.log(data);
       SuccessToast('Redirecting to game..')
-      // console.log(data)
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
       localStorage.setItem('userId',data.user.id)
-      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 seconds
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 second
       navigate("/startgame");
     } catch (error) {
       console.log(error);

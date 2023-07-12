@@ -2,7 +2,7 @@ import React, {  useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ErrorToast, SuccessToast } from "../Startgame";
 
@@ -21,7 +21,7 @@ export default function Signup() {
   
        SuccessToast(data.message )
       
-      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 seconds
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 second
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
       localStorage.setItem('userId',data.user.id)
