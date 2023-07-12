@@ -7,18 +7,18 @@ export default function Newgame({ apiData, hide }) {
   const [numberOfPlayers, setNumberOfPlayers] = useState('');
   const [selectedBoardId, setSelectedBoardId] = useState('');
   // const [boardData, setBoardData] = useState([]);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  // const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
 
   const getCreateData = async () => {
-    setIsFormSubmitted(true);
+    // setIsFormSubmitted(true);
 
-    if (numberOfPlayers.trim() === '') {
-      return;
-    }
+    // if (numberOfPlayers.trim() === '') {
+    //   return;
+    // }
 
     const requestData = {
-      // creator_id: decodedToken.id,
+      creator_id: localStorage.getItem(),
       board_id: selectedBoardId,
       players_number: parseInt(numberOfPlayers),
     };
@@ -88,9 +88,9 @@ console.log(apiData.data)
                 onChange={(e) => setNumberOfPlayers(e.target.value)}
                 required
               />
-              {isFormSubmitted && numberOfPlayers.trim() === '' && (
+              {/* {isFormSubmitted && numberOfPlayers.trim() === '' && (
                 <p className="text-danger">Number of players is required.</p>
-              )}
+              )} */}
               <div className="text-center">
                 <Link className="btn btn-primary my-5 w-50" onClick={getCreateData}>
                   Create game

@@ -16,15 +16,17 @@ export default function Signup() {
     setLoading(true);
   
     try {
-      const response = await axios.post("http://localhost:3000/api/user/sign-up", formData);
-      const data = response.data;
+      const {data} = await axios.post("http://localhost:3000/api/user/sign-up", formData);
   
        SuccessToast(data.message )
-      
+      console.log(data)
       await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 second
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
       localStorage.setItem('userId',data.user.id)
+      // console.log('userToken',data.token)
+      // console.log('userName',data.user.name)
+      // console.log('userId',data.user.id)
       navigate("/startgame");
     } catch (error) {
       ErrorToast(error.response.data.message )
