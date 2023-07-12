@@ -12,7 +12,7 @@ export default function ActiveBoard({ boardId }) {
           Authorization: `Bearer ${authToken}`,
         },
       });
-
+      
       console.log(data);
       setApiData(data);
     } catch (error) {
@@ -24,6 +24,7 @@ export default function ActiveBoard({ boardId }) {
     const base64String = btoa(
       new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
     );
+    console.log(base64String)
     return base64String;
   };
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import logo from '../assets/home.png'
+import logo from '../../assets/home.png'
 import { Helmet } from 'react-helmet';
 export default function home() {
   return (

@@ -25,7 +25,7 @@ export default function Newgame({ apiData, hide }) {
     await createGame(requestData);
   };
 
-
+console.log(apiData.data)
   // create game function
   async function createGame(requestData) {
     try {
@@ -55,7 +55,7 @@ export default function Newgame({ apiData, hide }) {
           {apiData ? (
             <div className="row justify-content-center align-items-center text-decoration-none">
               {apiData.map((board, index) => (
-                <div className="col-md-6" key={index}>
+                <div className="col-md-2" key={index}>
                   <input
                     type="radio"
                     defaultValue={`Board NO. ${board.id}`}
@@ -64,6 +64,7 @@ export default function Newgame({ apiData, hide }) {
                   />
                   <span>{`Board NO. ${board.id}`}</span>
                 </div>
+                // <img src={board.data} alt="" />
               ))}
               <label htmlFor="number">Number of players</label>
               <input

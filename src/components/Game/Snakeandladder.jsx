@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { authToken } from './../Startgame';
+import { authToken } from '../Startgame';
 //!delete?
 export default function Snakeandladder() {
   const [apiData, setApiData] = useState([]);

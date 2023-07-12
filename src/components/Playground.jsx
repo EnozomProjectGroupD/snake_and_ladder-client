@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import { authToken } from "./Startgame";
 import Rolldice from "./Rolldice";
-import ActiveBoard from './Boards/ActiveBoard';
+import ActiveBoard from './Game/ActiveBoard';
 
 export default function Playground() {
 

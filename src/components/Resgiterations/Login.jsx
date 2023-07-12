@@ -4,19 +4,13 @@ import { Helmet } from 'react-helmet'
 import {Link,  useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ErrorToast, SuccessToast } from '../Startgame';
 
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
   
-
-  const SuccessToast = (event) => toast.success(event, {
-    position: 'top-center',});
-  const errorToast = (event) => toast.error(event, {
-    position: 'top-center',});
-
-
 
   async function handleLogin(formData) {
     setLoading(true);
@@ -29,11 +23,11 @@ export default function Login() {
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
       localStorage.setItem('userId',data.user.id)
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 seconds
       navigate("/startgame");
     } catch (error) {
       console.log(error);
-      errorToast(error.response.data.message )
+      ErrorToast(error.response.data.message )
       console.log(error.response.data.message ) 
    }
   

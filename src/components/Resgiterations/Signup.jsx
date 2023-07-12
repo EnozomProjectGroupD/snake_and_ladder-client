@@ -4,16 +4,12 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ErrorToast, SuccessToast } from "../Startgame";
 
 
 export default function Signup() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
-
-  const SuccessToast = (event) => toast.success(event, {
-    position: 'top-center',});
-  const errorToast = (event) => toast.error(event, {
-    position: 'top-center',});
 
 
   async function handleSignup(formData) {
@@ -24,16 +20,14 @@ export default function Signup() {
       const data = response.data;
   
        SuccessToast(data.message )
-      console.log(data);
-
-      console.log(data.message)
-      // console.log(data.token)
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
-
-      navigate("/login");
+      
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 seconds
+      localStorage.setItem('userToken',data.token)
+      localStorage.setItem('userName',data.user.name)
+      localStorage.setItem('userId',data.user.id)
+      navigate("/startgame");
     } catch (error) {
-      console.log(error);
-      errorToast(error.response.data.message )
+      ErrorToast(error.response.data.message )
       console.log(error.response.data.message )       
     }
   

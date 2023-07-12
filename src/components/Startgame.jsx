@@ -12,10 +12,12 @@ export const authToken = localStorage.getItem("userToken");
 export const SuccessToast = (event) =>
   toast.success(event, {
     position: "top-center",
+    autoClose:500
   });
 export const ErrorToast = (event) =>
   toast.error(event, {
     position: "top-center",
+    autoClose:500
   });
 
 export default function Startgame() {
