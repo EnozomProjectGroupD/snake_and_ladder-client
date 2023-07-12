@@ -58,7 +58,7 @@ export default function Newgame({ apiData, hide }) {
               <label htmlFor="number">Number of players</label>
               <input
                 type="number"
-                value={numberOfPlayers}
+                value={numberOfPlayers} required
                 onChange={(e) => setNumberOfPlayers(e.target.value)}
               />
               <div className="text-center">
