@@ -1,46 +1,45 @@
-import React, {  useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Signup() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const SuccessToast = (event) => toast.success(event, {
-    position: 'top-center',});
-  const errorToast = (event) => toast.error(event, {
-    position: 'top-center',});
-
+  const SuccessToast = (event) =>
+    toast.success(event, {
+      position: "top-center",
+    });
+  const errorToast = (event) =>
+    toast.error(event, {
+      position: "top-center",
+    });
 
   async function handleSignup(formData) {
     setLoading(true);
-  
-    try {
-      const response = await axios.post("http://localhost:3000/api/user/sign-up", formData);
-      const data = response.data;
-  
-       SuccessToast(data.message )
-      console.log(data);
 
-      console.log(data.message)
-      // console.log(data.token)
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/user/sign-up",
+        formData
+      );
+      const data = response.data;
+
+      SuccessToast(data.message);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 seconds
 
       navigate("/login");
     } catch (error) {
-      console.log(error);
-      errorToast(error.response.data.message )
-      console.log(error.response.data.message )       
+      errorToast(error.response.data.message);
     }
-  
+
     setLoading(false);
   }
-  
- 
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = {
@@ -49,17 +48,15 @@ export default function Signup() {
       password: event.target.password.value,
       confirmPassword: event.target.confirmPassword.value,
     };
-    // console.log(formData)
     handleSignup(formData);
   }
 
-  
   return (
     <>
       <Helmet>
         <title>Signup</title>
       </Helmet>
-    <ToastContainer />
+      <ToastContainer />
 
       <div className="align-items-center justify-content-center d-flex vh-100 flex-column">
         <h2>Sign up:</h2>
@@ -74,7 +71,13 @@ export default function Signup() {
           <label htmlFor="username" className="my-2">
             User Name:
           </label>
-          <input type="text"   id="username" name="username" className="w-75"required   />
+          <input
+            type="text"
+            id="username"
+            name="username"
+            className="w-75"
+            required
+          />
 
           <label htmlFor="password" className="my-2">
             Password:
@@ -87,7 +90,7 @@ export default function Signup() {
             required
           />
           <label htmlFor="password" className="my-2">
-           Confirm Password:
+            Confirm Password:
           </label>
           <input
             type="password"
@@ -96,13 +99,15 @@ export default function Signup() {
             className="w-75"
             required
           />
-{ loading? 
-          <button type="submit" className="btn btn-outline-danger my-2 w-50">
-           <i className="fas fa-spinner fa-spin mx-2"></i>Signup
-          </button>:
-          <button type="submit" className="btn btn-outline-danger my-2 w-50">
-          Signup
-          </button>}
+          {loading ? (
+            <button type="submit" className="btn btn-outline-danger my-2 w-50">
+              <i className="fas fa-spinner fa-spin mx-2"></i>Signup
+            </button>
+          ) : (
+            <button type="submit" className="btn btn-outline-danger my-2 w-50">
+              Signup
+            </button>
+          )}
         </form>
       </div>
     </>

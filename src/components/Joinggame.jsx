@@ -42,9 +42,8 @@ export default function Joinggame() {
     await joinGame(requestData);
   };
 
-
-//    Join game 
-/// get all boards and enter the players amount
+  //    Join game
+  /// get all boards and enter the players amount
   async function joinGame(requestData) {
     try {
       const apiUrl = "http://localhost:3000/api/player/create";
