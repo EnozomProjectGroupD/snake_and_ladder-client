@@ -27,7 +27,7 @@ export default function Signup() {
       console.log(data);
 
       console.log(data.message)
-      console.log(data.token)
+      // console.log(data.token)
       await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
 
       navigate("/login");
@@ -47,8 +47,9 @@ export default function Signup() {
       name: event.target.name.value,
       username: event.target.username.value,
       password: event.target.password.value,
+      confirmPassword: event.target.confirmPassword.value,
     };
-    console.log(formData)
+    // console.log(formData)
     handleSignup(formData);
   }
 
@@ -82,6 +83,16 @@ export default function Signup() {
             type="password"
             id="password"
             name="password"
+            className="w-75"
+            required
+          />
+          <label htmlFor="password" className="my-2">
+           Confirm Password:
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
             className="w-75"
             required
           />

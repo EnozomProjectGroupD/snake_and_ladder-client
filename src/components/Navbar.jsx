@@ -15,6 +15,7 @@ const navigate = useNavigate ()
 
   localStorage.removeItem("userToken")
   localStorage.removeItem("userName")
+  localStorage.removeItem("userId")
   navigate('login')
   
 }
@@ -47,9 +48,9 @@ const navigate = useNavigate ()
           <>
          
             </>:""}
-            <div className="ms-auto">
+            <div className="ms-auto text-center">
 
-              {localStorage.getItem('userToken')? <Link className="btn btn-outline-dark mx-2" onClick={logOut}>
+              {localStorage.getItem('userToken')? <Link className="btn btn-outline-dark mx-2 " onClick={logOut}>
                 Logout
               </Link>:  (<>
                 <Link className="text-decoration-none text-dark mx-2" to={"/"}>

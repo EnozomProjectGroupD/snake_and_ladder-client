@@ -22,13 +22,13 @@ export default function Login() {
     setLoading(true);
   
     try {
-      const response = await axios.post("http://localhost:3000/api/user/log-in", formData);
-      const data = response.data;
-  
-      // console.log(data);
+      const {data} = await axios.post("http://localhost:3000/api/user/log-in", formData);
+      console.log(data);
       SuccessToast('Redirecting to game..')
+      // console.log(data)
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
+      localStorage.setItem('userId',data.user.id)
       await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds
       navigate("/startgame");
     } catch (error) {

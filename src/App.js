@@ -9,6 +9,7 @@ import Startgame from "./components/Startgame";
 import Joinggame from "./components/Joinggame";
 import Playground from './components/Playground';
 import Snakeandladder from './components/Boards/Snakeandladder';
+import NotFound from "./components/NotFound";
 
 function App() {
   const router = createBrowserRouter([
@@ -43,6 +44,12 @@ function App() {
             <ProtectedRoute>
               <Playground></Playground>
             </ProtectedRoute>
+          ),
+        },
+        {
+          path: "*",
+          element: (
+              <NotFound></NotFound>
           ),
         },
       ],
