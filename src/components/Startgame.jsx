@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Newgame from "./Newgame";
@@ -24,29 +24,30 @@ export default function Startgame() {
 
   const [apiData, setApiData] = useState([]);
   const [hide, setHide] = useState(true);
-
+const navigate = useNavigate()
   
 
   // Get all boards
-  async function getAllboards() {
-    try {
-      const apiUrl = "http://localhost:3000/api/board/get-all";
-      const response = await axios.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+  // async function getAllboards() {
+  //   try {
+  //     const apiUrl = "http://localhost:3000/api/board/get-all";
+  //     const response = await axios.get(apiUrl, {
+  //       headers: {
+  //         Authorization: `Bearer ${authToken}`,
+  //       },
+  //     });
 
-      console.log(response.data);
-      console.log(response.data.boards);
-      SuccessToast(response.data.message);
+  //     console.log(response.data);
+  //     console.log(response.data.boards);
+  //     SuccessToast(response.data.message);
 
-      setApiData(response.data.boards);
-    } catch (error) {
-      ErrorToast(error.response.data);
-      console.error(error);
-    }
-  }
+  //     setApiData(response.data.boards);
+  //     navigate('/newgame')
+  //   } catch (error) {
+  //     ErrorToast(error.response.data);
+  //     console.error(error);
+  //   }
+  // }
 
   
 
@@ -66,10 +67,11 @@ export default function Startgame() {
         <h3>Press the button to start</h3>
         <Link
           className="btn btn-primary w-50 my-4"
-          onClick={() => {
-            getAllboards();
-            setHide(false);
-          }}
+          // onClick={() => {
+            // getAllboards();
+            // setHide(false);
+          // }}
+          to={'/newgame'}
         >
           Start game
         </Link>

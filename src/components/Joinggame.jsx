@@ -3,13 +3,13 @@ import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
 import { ErrorToast, SuccessToast, authToken } from "./Startgame";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Joinggame() {
   const [game_id, setGameId] = useState("");
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate()
   // Get all game rooms
   async function getAllRooms() {
     setLoading(true);
@@ -33,13 +33,12 @@ export default function Joinggame() {
       console.log(error);
     }
     setLoading(false);
-
   }
-//get all games when load
-useEffect(() => {
-  getAllRooms()
- }, [])
- 
+  //get all games when load
+  useEffect(() => {
+    getAllRooms();
+  }, []);
+
   // Get data for joining game
   const getJoinData = async () => {
     const requestData = {
@@ -49,21 +48,20 @@ useEffect(() => {
     await joinGame(requestData);
   };
 
-
-//    Join game 
-/// get all boards and enter the players amount
-//!delete
+  //    Join game
+  /// get all boards and enter the players amount
   async function joinGame(requestData) {
     try {
       const apiUrl = "http://localhost:3000/api/player/create";
-      const response = await axios.post(apiUrl, requestData, {
+      const { data } = await axios.post(apiUrl, requestData, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       });
 
-      console.log(response);
-      SuccessToast(response.data.message);
+      console.log(data);
+      SuccessToast(data.message);
+      navigate(`/playground/${requestData.game_id}`)
     } catch (error) {
       console.error(error);
     }
@@ -80,9 +78,24 @@ useEffect(() => {
           apiData.length ? "" : "vh-100"
         }`}
       >
+        <label htmlFor="">enter game id</label>
+        <input
+          type="number"
+          id=""
+          value={game_id}
+          onChange={(e) => setGameId(e.target.value)}
+          required
+        />
+        <Link
+          onClick={getJoinData}
+          className="btn btn-primary w-50 mb-2 my-4"
+        >
+          enter game id
+        </Link>
+        <p >OR</p>
         {loading ? (
           <button type="submit" className="btn btn-primary w-50" disabled>
-            <i className="fas fa-spinner fa-spin mx-2"></i>Refreshing Games
+            <i className="fas fa-spinner fa-spin mx-2"></i>display existing games
           </button>
         ) : (
           <button
@@ -127,20 +140,6 @@ useEffect(() => {
           </table>
         ) : null}
         {/* ****************************************************************** */}
-        <label htmlFor="">enter game id</label>
-        <input
-  type="number"
-  id=""
-  value={game_id}
-  onChange={(e) => setGameId(e.target.value)}
-  required
-/>
-        <Link
-                      to={`/playground/${game_id}`}
-                      className="btn btn-primary w-100 mb-2"
-                    >
-                      enter game id
-                    </Link>
       </div>
     </>
   );

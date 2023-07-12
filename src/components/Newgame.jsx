@@ -1,104 +1,134 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ErrorToast, SuccessToast, authToken } from './Startgame';
 import { Link } from 'react-router-dom';
 
-export default function Newgame({ apiData, hide }) {
+export default function Newgame() {
   const [numberOfPlayers, setNumberOfPlayers] = useState('');
   const [selectedBoardId, setSelectedBoardId] = useState('');
-  // const [boardData, setBoardData] = useState([]);
-  // const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [apiData, setApiData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  // const [isDisabled, setIsDisabled] = useState(true);
 
 
-  const getCreateData = async () => {
-    // setIsFormSubmitted(true);
-
-    // if (numberOfPlayers.trim() === '') {
-    //   return;
-    // }
-
-    const requestData = {
-      creator_id: localStorage.getItem(),
-      board_id: selectedBoardId,
-      players_number: parseInt(numberOfPlayers),
-    };
-
-    console.log(requestData);
-    await createGame(requestData);
-  };
-
-console.log(apiData.data)
-  // create game function
-  async function createGame(requestData) {
+  //when open get all boards
+  async function getAllboards() {
     try {
-      const apiUrl = "http://localhost:3000/api/game/create";
-
-      const response = await axios.post(apiUrl, requestData, {
+      const apiUrl = "http://localhost:3000/api/board/get-all";
+      const { data } = await axios.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       });
 
-      console.log(response);
-      SuccessToast(response.data.message);
+      SuccessToast(data.message);
+
+      setApiData(data.boards);
+      setIsLoading(false);
     } catch (error) {
       ErrorToast(error.response.data);
       console.error(error);
     }
   }
 
-  // console.log(apiData);
+  useEffect(() => {
+    getAllboards();
+  }, []);
 
-  // const convertToBase64 = (arrayBuffer) => {
-  //   const base64String = btoa(
-  //     new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
-  //   );
-  //   console.log(base64String)
-  //   return base64String;
-  // };
+  const getCreateData = async () => {
+    if (numberOfPlayers.trim() === '' || numberOfPlayers < 2 || numberOfPlayers > 10) {
+      return;
+    }
 
-  // const base64String = apiData.board?.Buffer?.data
-  //   ? convertToBase64(apiData.board.Buffer.data)
-  //   : '';
+    const requestData = {
+      creator_id: localStorage.getItem('userId'),
+      board_id: selectedBoardId,
+      players_number: parseInt(numberOfPlayers),
+    };
+
+    // if (selectedBoardId !== '' && requestData.players_number >= 2 && requestData.players_number <= 10) {
+    //   setIsDisabled(false);
+    // } else {
+    //   setIsDisabled(true);
+    // }
+
+    console.log(requestData);
+    await createGame(requestData);
+  };
+
+  async function createGame(requestData) {
+    try {
+      const apiUrl = "http://localhost:3000/api/game/create";
+
+      const { data } = await axios.post(apiUrl, requestData, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      console.log(data);
+      SuccessToast(data.message);
+    } catch (error) {
+      ErrorToast(error.response.data);
+      console.error(error);
+    }
+  }
+
+  const convertToBase64 = (arrayBuffer) => {
+    const base64String = btoa(
+      new Uint8Array(arrayBuffer).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    );
+    return base64String;
+  };
 
   return (
     <>
-      <div className={!hide ? "d-block" : "d-none"}>
+      <div>
         <div className="text-center d-flex flex-column">
           <h1 className="my-2">Choose your board</h1>
-          {apiData ? (
+          {isLoading ? (
+            <p>Loading boards...</p>
+          ) : (
             <div className="row justify-content-center align-items-center text-decoration-none">
               {apiData.map((board, index) => (
                 <div className="col-md-2" key={index}>
                   <input
                     type="radio"
-                    defaultValue={`Board NO. ${board.id}`}
-                    checked={selectedBoardId === board.id}
-                    onChange={() => setSelectedBoardId(board.id)}
+                    name="board"
+                    value={board.id}
+                    defaultChecked={selectedBoardId === board.id}
+                    onChange={(e) => setSelectedBoardId(e.target.value)}
                   />
-                  <span>{`Board NO. ${board.id}`}</span>
+                  <label>{`Board NO. ${board.id}`}</label>
+                  {board.Buffer && (
+                    <img
+                      src={`data:image/png;base64,${convertToBase64(board.Buffer.data)}`}
+                      alt="boards"
+                      className='w-75'
+                    />
+                  )}
                 </div>
-                      // {base64String && <img src={`data:image/png;base64,${base64String}`} className="w-50" alt="boardpic" />}
-
               ))}
-              <label htmlFor="number">Number of players</label>
+              <label htmlFor="number">Number of players (2-10)</label>
               <input
                 type="number"
+                id="number"
                 value={numberOfPlayers}
+                min="2"
+                max="10"
                 onChange={(e) => setNumberOfPlayers(e.target.value)}
                 required
+                placeholder='Enter players number'
               />
-              {/* {isFormSubmitted && numberOfPlayers.trim() === '' && (
-                <p className="text-danger">Number of players is required.</p>
-              )} */}
               <div className="text-center">
-                <Link className="btn btn-primary my-5 w-50" onClick={getCreateData}>
+                <button className="btn btn-primary my-5 w-50" onClick={getCreateData} >
                   Create game
-                </Link>
+                </button>
               </div>
             </div>
-          ) : (
-            <p>Loading boards...</p>
           )}
         </div>
       </div>
