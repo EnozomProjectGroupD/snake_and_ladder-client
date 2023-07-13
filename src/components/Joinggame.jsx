@@ -55,7 +55,7 @@ export default function Joinggame() {
       const apiUrl = "http://localhost:3000/api/player/create";
       const { data } = await axios.post(apiUrl, requestData, {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
         },
       });
 
@@ -66,6 +66,28 @@ export default function Joinggame() {
       console.error(error);
     }
   }
+  async function joinGamefromBtn(game) {
+    try {
+      const apiUrl = "http://localhost:3000/api/player/create";
+      const joinData = {
+        game_id:game.id,
+        // creator_id: game.creator.id
+      };
+      const { data } = await axios.post(apiUrl,{game_id:game.id
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        },
+      });
+      console.log(joinData);
+      console.log(data);
+      SuccessToast(data.message);
+      navigate(`/creatorroom/${joinData.game_id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
   return (
     <>
@@ -95,7 +117,7 @@ export default function Joinggame() {
         <p >OR</p>
         {loading ? (
           <button type="submit" className="btn btn-primary w-50" disabled>
-            <i className="fas fa-spinner fa-spin mx-2"></i>display existing games
+            <i className="fas fa-spinner fa-spin mx-2"></i>getting existing games
           </button>
         ) : (
           <button
@@ -127,13 +149,13 @@ export default function Joinggame() {
                   <td>{game.current_player}</td>
                   <td>{game.status}</td>
                   <td>
-                    <Link
-                                onClick={getJoinData}
-                      className="btn btn-primary w-100 mb-2"
-                    >
-                      Join game
-                    </Link>
-                  </td>
+                  <button
+                    className="btn btn-primary w-100 mb-2"
+                    onClick={() => joinGamefromBtn(game)}
+                  >
+                    Join game
+                  </button>
+                </td>
                 </tr>
               ))}
             </tbody>

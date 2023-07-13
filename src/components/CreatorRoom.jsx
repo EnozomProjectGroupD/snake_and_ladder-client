@@ -15,13 +15,11 @@ export default function CreatorRoom() {
   const [gameId, setGameId] = useState();
 
 
-let theId = useParams.id
-
   async function getgame(id) {
     try {
       const { data } = await axios.get(`http://localhost:3000/api/game/get/${id}`, {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
         },
       });
       setApiData(data.game);
@@ -47,14 +45,13 @@ let theId = useParams.id
 
     async function getPlayground() {
     try {
-      const token = localStorage.getItem('userToken') // Replace with your actual token
       const response = await request
         .get('`http://localhost:3000/api/game/start-game/6')
-        .set('Authorization', `Bearer ${token}`);
+        .set('Authorization', `Bearer ${localStorage.getItem('userToken')}`);
   
       console.log(response.body);
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error( error);
     }
   }
   

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { authToken } from '../Startgame';
 import axios from 'axios';
 
 export default function ActiveBoard({ boardId }) {
@@ -9,11 +8,11 @@ export default function ActiveBoard({ boardId }) {
     try {
       const { data } = await axios.get(`http://localhost:3000/api/board/get/6`, {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
         },
       });
       
-      console.log(data);
+      // console.log(data);
       setApiData(data);
     } catch (error) {
       console.log(error);
@@ -27,7 +26,7 @@ useEffect(() => {
     const base64String = btoa(
       new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
     );
-    console.log(base64String)
+    // console.log(base64String)
     return base64String;
   };
 

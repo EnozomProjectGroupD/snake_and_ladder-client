@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { authToken } from "./Startgame";
+// import { authToken } from "./Startgame";
 import Rolldice from "./Rolldice";
 import ActiveBoard from "./Game/ActiveBoard";
 import PlayersInRoom from "./playersInRoom";
@@ -12,7 +12,6 @@ export default function Playground(apiData) {
 
   console.log(id);
   // const [apiData, setApiData] = useState()
-
   console.log(apiData);
   //  const [startGame, setStartGame] = useState(second)
   //   async function getPlayground() {

@@ -51,7 +51,7 @@ const navigate = useNavigate()
 
       const { data } = await axios.post(apiUrl, requestData, {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
         },
       });
 

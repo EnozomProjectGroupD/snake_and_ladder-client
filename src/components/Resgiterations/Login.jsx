@@ -5,20 +5,18 @@ import {Link,  useNavigate } from 'react-router-dom'
 import { ToastContainer,  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ErrorToast, SuccessToast } from '../Startgame';
-import { userToken } from './Signup';
 
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
-  console.log(userToken)
 
   async function handleLogin(formData) {
     setLoading(true);
   
     try {
       const {data} = await axios.post("http://localhost:3000/api/user/log-in", formData);
-      console.log(data);
+      // console.log(data);
       SuccessToast('Redirecting to game..')
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
