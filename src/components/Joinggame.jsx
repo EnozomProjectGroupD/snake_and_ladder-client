@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import { ErrorToast, SuccessToast, authToken } from "./Startgame";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { getAllAvailableGames } from "../api/api";
 
 export default function Joinggame() {
   const [game_id, setGameId] = useState("");
@@ -14,16 +15,7 @@ export default function Joinggame() {
   async function getAllRooms() {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/game/get-all?status=waiting",
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-
-      console.log(response.data.games);
+      const response = getAllAvailableGames();
       SuccessToast(response.data.message);
       setApiData(response.data.games);
       setLoading(false);
