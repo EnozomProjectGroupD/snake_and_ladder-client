@@ -5,8 +5,8 @@ import { authToken, ErrorToast } from "./Startgame";
 import { ToastContainer } from "react-toastify";
 
 export default function RollDice({ id }) {
-  const [rollNumber, setRollNumber] = useState(1); // Initial roll number
-  //const dice = useRef();
+  const [rollNumber, setRollNumber] = useState(null); // Initial roll number
+  const [currentPosition, setCurrentPostion] = useState(1);
   const rollingDice = async () => {
     try {
       const response = await axios.post(
@@ -21,7 +21,7 @@ export default function RollDice({ id }) {
 
       const rollValue = response.data.rollValue;
       setRollNumber(rollValue);
-     // dice.current?.roll(rollValue);
+      setCurrentPostion(response.data.position);
       console.log(rollValue);
     } catch (error) {
       ErrorToast(error.response.data.message);
@@ -33,10 +33,10 @@ export default function RollDice({ id }) {
     <div>
       <ToastContainer />
       <div>
-        <button onClick={rollingDice}>
-        <Dice cheatValue={rollNumber} size={150} />
-        </button>
+        <button onClick={rollingDice}>Roll Dice</button>
+        {/* <Dice cheatValue={rollNumber} size={150}></Dice> */}
         <p>Roll Number: {rollNumber}</p>
+        <p>Current Position: {currentPosition}</p>
       </div>
     </div>
   );
