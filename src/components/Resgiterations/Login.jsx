@@ -10,14 +10,14 @@ import { ErrorToast, SuccessToast } from '../Startgame';
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
-  
 
+  
   async function handleLogin(formData) {
     setLoading(true);
   
     try {
       const {data} = await axios.post("http://localhost:3000/api/user/log-in", formData);
-      console.log(data);
+      // console.log(data);
       SuccessToast('Redirecting to game..')
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
@@ -38,7 +38,7 @@ export default function Login() {
       username: event.target.username.value,
       password: event.target.password.value,
     };
-    console.log(formData)
+    // console.log(formData)
     handleLogin(formData);
   }
 
