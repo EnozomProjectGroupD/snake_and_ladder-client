@@ -6,12 +6,16 @@ import { Link } from 'react-router-dom';
 import { userToken } from './Resgiterations/Signup';
 import Playground from './Playground';
 import request from 'superagent';
+import PlayersInRoom from './playersInRoom';
 
 
 export default function CreatorRoom() {
   const { id } = useParams();
   const [apiData, setApiData] = useState();
   const [gameId, setGameId] = useState();
+
+
+let theId = useParams.id
 
   async function getgame(id) {
     try {
@@ -48,7 +52,7 @@ export default function CreatorRoom() {
         .get('`http://localhost:3000/api/game/start-game/6')
         .set('Authorization', `Bearer ${token}`);
   
-      console.log(response);
+      console.log(response.body);
     } catch (error) {
       console.error('An error occurred:', error);
     }
@@ -86,7 +90,7 @@ export default function CreatorRoom() {
             </tbody>
           </table>
 
-          {parseInt(localStorage.getItem('userId')) === apiData.creator_id ? (
+          {parseInt(localStorage.getItem('userId')) == apiData.creator_id ? (
             <Link className='btn btn-primary my-5' onClick={getPlayground}>
               Start game
             </Link>

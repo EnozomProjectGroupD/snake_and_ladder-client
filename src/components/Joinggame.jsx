@@ -128,7 +128,7 @@ export default function Joinggame() {
                   <td>{game.status}</td>
                   <td>
                     <Link
-                      to={`/creatorroom/${game.id}`}
+                                onClick={getJoinData}
                       className="btn btn-primary w-100 mb-2"
                     >
                       Join game
