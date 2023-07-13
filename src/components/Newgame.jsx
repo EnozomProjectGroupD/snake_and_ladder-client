@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ErrorToast, SuccessToast, authToken } from "./Startgame";
 import { useNavigate } from "react-router";
+import { ToastContainer } from "react-toastify";
 // import { Link } from "react-router-dom";
 
 export default function Newgame() {
@@ -61,8 +62,8 @@ const navigate = useNavigate()
       SuccessToast(data.message);
       navigate(`/creatorroom/${data.game.id}`)
     } catch (error) {
-      ErrorToast(error.data);
-      console.error(error);
+      console.log(error.response.data.error);
+      ErrorToast(error.response.data.error);
     }
   }
 
@@ -78,6 +79,7 @@ const navigate = useNavigate()
 
   return (
     <>
+    <ToastContainer></ToastContainer>
       <div>
         <div className="text-center d-flex flex-column">
           <h1 className="my-2">Choose your board</h1>
