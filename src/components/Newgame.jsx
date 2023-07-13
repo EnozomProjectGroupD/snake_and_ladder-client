@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ErrorToast, SuccessToast, authToken } from "./Startgame";
+import { useNavigate } from "react-router";
 // import { Link } from "react-router-dom";
 
 export default function Newgame() {
@@ -9,7 +10,7 @@ export default function Newgame() {
   const [apiData, setApiData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   // const [isDisabled, setIsDisabled] = useState(true);
-
+const navigate = useNavigate()
   //when open get all boards
   async function getAllboards() {
     try {
@@ -46,7 +47,7 @@ export default function Newgame() {
 
   async function createGame(requestData) {
     try {
-      const apiUrl = "http://localhost:3000/api/game/create";
+      const apiUrl = "http://localhost:3000/api/game/create/";
 
       const { data } = await axios.post(apiUrl, requestData, {
         headers: {
@@ -57,7 +58,7 @@ export default function Newgame() {
       console.log(data);
       console.log(data.game.id);
       SuccessToast(data.message);
-      // Navigate('/creatorroom/')
+      navigate(`/creatorroom/${data.game.id}`)
     } catch (error) {
       ErrorToast(error.response.data);
       console.error(error);
