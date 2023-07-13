@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import { authToken } from "./Startgame";
 import Rolldice from "./Rolldice";
-import ActiveBoard from './Boards/ActiveBoard';
+import ActiveBoard from './Game/ActiveBoard';
 
 export default function Playground() {
 
@@ -31,8 +31,7 @@ const boardId =apiData
   return (<>
   <button onClick={getPlayground}>here</button>
   {id}
-  {/* <Rolldice id= {id}></Rolldice> */}
- 
 <ActiveBoard boardId={boardId} ></ActiveBoard>
+<Rolldice  id={id}></Rolldice>
   </>);
 }

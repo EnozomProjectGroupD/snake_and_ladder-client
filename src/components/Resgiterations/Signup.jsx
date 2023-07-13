@@ -2,39 +2,35 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ErrorToast, SuccessToast } from "../Startgame";
+
 
 export default function Signup() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const SuccessToast = (event) =>
-    toast.success(event, {
-      position: "top-center",
-    });
-  const errorToast = (event) =>
-    toast.error(event, {
-      position: "top-center",
-    });
 
   async function handleSignup(formData) {
     setLoading(true);
-
+  
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/user/sign-up",
-        formData
-      );
-      const data = response.data;
-
-      SuccessToast(data.message);
-
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 seconds
-
-      navigate("/login");
+      const {data} = await axios.post("http://localhost:3000/api/user/sign-up", formData);
+  
+       SuccessToast(data.message )
+      console.log(data)
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 second
+      localStorage.setItem('userToken',data.token)
+      localStorage.setItem('userName',data.user.name)
+      localStorage.setItem('userId',data.user.id)
+      // console.log('userToken',data.token)
+      // console.log('userName',data.user.name)
+      // console.log('userId',data.user.id)
+      navigate("/startgame");
     } catch (error) {
-      errorToast(error.response.data.message);
+      ErrorToast(error.response.data.message )
+      console.log(error.response.data.message )       
     }
 
     setLoading(false);

@@ -1,41 +1,35 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Helmet } from "react-helmet";
-import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios'
+import React, {  useState } from 'react'
+import { Helmet } from 'react-helmet'
+import {Link,  useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ErrorToast, SuccessToast } from '../Startgame';
+
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const SuccessToast = (event) =>
-    toast.success(event, {
-      position: "top-center",
-    });
-  const errorToast = (event) =>
-    toast.error(event, {
-      position: "top-center",
-    });
+  const navigate = useNavigate()
+  
 
   async function handleLogin(formData) {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:3000/api/user/log-in",
-        formData
-      );
-      SuccessToast("Redirecting to game..");
-      localStorage.setItem("userToken", data.token);
-      localStorage.setItem("userName", data.user.name);
-      localStorage.setItem("userId", data.user.id);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 seconds
+      const {data} = await axios.post("http://localhost:3000/api/user/log-in", formData);
+      console.log(data);
+      SuccessToast('Redirecting to game..')
+      localStorage.setItem('userToken',data.token)
+      localStorage.setItem('userName',data.user.name)
+      localStorage.setItem('userId',data.user.id)
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 second
       navigate("/startgame");
     } catch (error) {
-      errorToast(error.response.data.message);
-    }
-
+      console.log(error);
+      ErrorToast(error.response.data.message )
+      console.log(error.response.data.message ) 
+   }
+  
     setLoading(false);
   }
   function handleSubmit(event) {
