@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { ErrorToast, SuccessToast, authToken } from './Startgame';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { ErrorToast, SuccessToast, authToken } from "./Startgame";
+import { useNavigate } from "react-router";
+// import { Link } from "react-router-dom";
 
 export default function Newgame() {
-  const [numberOfPlayers, setNumberOfPlayers] = useState('');
-  const [selectedBoardId, setSelectedBoardId] = useState('');
+  const [numberOfPlayers, setNumberOfPlayers] = useState("");
+  const [selectedBoardId, setSelectedBoardId] = useState("");
   const [apiData, setApiData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   // const [isDisabled, setIsDisabled] = useState(true);
-
-
+const navigate = useNavigate()
   //when open get all boards
   async function getAllboards() {
     try {
@@ -36,21 +36,10 @@ export default function Newgame() {
   }, []);
 
   const getCreateData = async () => {
-    if (numberOfPlayers.trim() === '' || numberOfPlayers < 2 || numberOfPlayers > 10) {
-      return;
-    }
-
     const requestData = {
-      creator_id: localStorage.getItem('userId'),
-      board_id: selectedBoardId,
+      board_id: parseInt(selectedBoardId),
       players_number: parseInt(numberOfPlayers),
     };
-
-    // if (selectedBoardId !== '' && requestData.players_number >= 2 && requestData.players_number <= 10) {
-    //   setIsDisabled(false);
-    // } else {
-    //   setIsDisabled(true);
-    // }
 
     console.log(requestData);
     await createGame(requestData);
@@ -58,7 +47,7 @@ export default function Newgame() {
 
   async function createGame(requestData) {
     try {
-      const apiUrl = "http://localhost:3000/api/game/create";
+      const apiUrl = "http://localhost:3000/api/game/create/";
 
       const { data } = await axios.post(apiUrl, requestData, {
         headers: {
@@ -67,7 +56,9 @@ export default function Newgame() {
       });
 
       console.log(data);
+      console.log(data.game.id);
       SuccessToast(data.message);
+      navigate(`/creatorroom/${data.game.id}`)
     } catch (error) {
       ErrorToast(error.response.data);
       console.error(error);
@@ -78,7 +69,7 @@ export default function Newgame() {
     const base64String = btoa(
       new Uint8Array(arrayBuffer).reduce(
         (data, byte) => data + String.fromCharCode(byte),
-        ''
+        ""
       )
     );
     return base64String;
@@ -105,9 +96,11 @@ export default function Newgame() {
                   <label>{`Board NO. ${board.id}`}</label>
                   {board.Buffer && (
                     <img
-                      src={`data:image/png;base64,${convertToBase64(board.Buffer.data)}`}
+                      src={`data:image/png;base64,${convertToBase64(
+                        board.Buffer.data
+                      )}`}
                       alt="boards"
-                      className='w-75'
+                      className="w-75"
                     />
                   )}
                 </div>
@@ -121,10 +114,13 @@ export default function Newgame() {
                 max="10"
                 onChange={(e) => setNumberOfPlayers(e.target.value)}
                 required
-                placeholder='Enter players number'
+                placeholder="Enter players number"
               />
               <div className="text-center">
-                <button className="btn btn-primary my-5 w-50" onClick={getCreateData} >
+                <button
+                  className="btn btn-primary my-5 w-50"
+                  onClick={getCreateData}
+                >
                   Create game
                 </button>
               </div>
