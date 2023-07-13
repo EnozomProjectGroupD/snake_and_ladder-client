@@ -30,30 +30,29 @@ export default function CreatorRoom() {
     }
   }
 
-  //   try {
-  //     const { data } = await axios.get(`http://localhost:3000/api/game/start-game/6`, {
-  //       headers: {
-  //         Authorization: `Bearer ${userToken}`,
-  //       },
-  //     });
-  //     console.log(data);
-  //     // Handle the response or update the state as needed
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-    async function getPlayground() {
+  async function getPlayground() {
     try {
-      const response = await request
-        .get('`http://localhost:3000/api/game/start-game/6')
-        .set('Authorization', `Bearer ${localStorage.getItem('userToken')}`);
-  
-      console.log(response.body);
+      const { data } = await axios.get(`http://localhost:3000/api/game/start-game/6`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        },
+      });
+      console.log(data);
     } catch (error) {
-      console.error( error);
+      console.log(error);
     }
   }
+
+  //   try {
+  //     const response = await request
+  //       .get('`http://localhost:3000/api/game/start-game/6')
+  //       .set('Authorization', `Bearer ${localStorage.getItem('userToken')}`);
+  
+  //     console.log(response.body);
+  //   } catch (error) {
+  //     console.error( error);
+  //   }
+  // }
   
   useEffect(() => {
     getgame(id);
