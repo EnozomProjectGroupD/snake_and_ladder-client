@@ -2,15 +2,16 @@ import axios from 'axios'
 import React, {  useState } from 'react'
 import { Helmet } from 'react-helmet'
 import {Link,  useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer,  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ErrorToast, SuccessToast } from '../Startgame';
+import { userToken } from './Signup';
 
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
-  
+  console.log(userToken)
 
   async function handleLogin(formData) {
     setLoading(true);

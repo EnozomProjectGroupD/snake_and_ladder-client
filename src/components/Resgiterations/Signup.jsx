@@ -5,10 +5,14 @@ import axios from "axios";
 import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ErrorToast, SuccessToast } from "../Startgame";
+import Playground from './../Playground';
 
+export let userToken = localStorage.getItem('userToken') || '';
 
 export default function Signup() {
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
+  
   const navigate = useNavigate()
 
 
@@ -21,12 +25,11 @@ export default function Signup() {
        SuccessToast(data.message )
       console.log(data)
       await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 second
+      userToken =data.token
+
       localStorage.setItem('userToken',data.token)
       localStorage.setItem('userName',data.user.name)
       localStorage.setItem('userId',data.user.id)
-      // console.log('userToken',data.token)
-      // console.log('userName',data.user.name)
-      // console.log('userId',data.user.id)
       navigate("/startgame");
     } catch (error) {
       ErrorToast(error.response.data.message )
