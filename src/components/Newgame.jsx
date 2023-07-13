@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ErrorToast, SuccessToast, authToken } from "./Startgame";
 import { useNavigate } from "react-router";
+import { ToastContainer } from "react-toastify";
 // import { Link } from "react-router-dom";
 
 export default function Newgame() {
@@ -37,9 +38,9 @@ const navigate = useNavigate()
 
   const getCreateData = async () => {
     const requestData = {
-      board_id: parseInt(selectedBoardId),
-      players_number: parseInt(numberOfPlayers),
-    };
+      players_number: numberOfPlayers,
+      board_id: selectedBoardId,
+    }
 
     console.log(requestData);
     await createGame(requestData);
@@ -47,11 +48,12 @@ const navigate = useNavigate()
 
   async function createGame(requestData) {
     try {
-      const apiUrl = "http://localhost:3000/api/game/create/";
+      const apiUrl = "http://localhost:3000/api/game/create";
 
-      const { data } = await axios.post(apiUrl, requestData, {
+      const { data } = await axios.post(apiUrl,requestData
+  , {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization:`Bearer ${localStorage.getItem('userToken')}`,
         },
       });
 
@@ -60,8 +62,8 @@ const navigate = useNavigate()
       SuccessToast(data.message);
       navigate(`/creatorroom/${data.game.id}`)
     } catch (error) {
-      ErrorToast(error.response.data);
-      console.error(error);
+      console.log(error.response.data.error);
+      ErrorToast(error.response.data.error);
     }
   }
 
@@ -77,6 +79,7 @@ const navigate = useNavigate()
 
   return (
     <>
+    <ToastContainer></ToastContainer>
       <div>
         <div className="text-center d-flex flex-column">
           <h1 className="my-2">Choose your board</h1>
@@ -100,7 +103,7 @@ const navigate = useNavigate()
                         board.Buffer.data
                       )}`}
                       alt="boards"
-                      className="w-75"
+                      className="w-100"
                     />
                   )}
                 </div>

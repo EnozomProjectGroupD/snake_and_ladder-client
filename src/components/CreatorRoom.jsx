@@ -3,35 +3,66 @@ import { useParams } from 'react-router';
 import { authToken } from './Startgame';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { userToken } from './Resgiterations/Signup';
+import Playground from './Playground';
+import request from 'superagent';
+import PlayersInRoom from './playersInRoom';
+
 
 export default function CreatorRoom() {
   const { id } = useParams();
-  const [apiData, setApiData] = useState(null);
+  const [apiData, setApiData] = useState();
+  const [gameId, setGameId] = useState();
 
-  async function getgame() {
+
+  async function getgame(id) {
     try {
       const { data } = await axios.get(`http://localhost:3000/api/game/get/${id}`, {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
         },
       });
       setApiData(data.game);
+      setGameId(data.game.id);
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getPlayground() {
+    try {
+      const { data } = await axios.get(`http://localhost:3000/api/game/start-game/6`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        },
+      });
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   }
 
+  //   try {
+  //     const response = await request
+  //       .get('`http://localhost:3000/api/game/start-game/6')
+  //       .set('Authorization', `Bearer ${localStorage.getItem('userToken')}`);
+  
+  //     console.log(response.body);
+  //   } catch (error) {
+  //     console.error( error);
+  //   }
+  // }
+  
   useEffect(() => {
     getgame(id);
   }, [id]);
 
   return (
     <>
-
       {apiData && (
         <div className='text-center mt-5'>
-        <h2 >{apiData.status}</h2>
+          <h2>{apiData.status}</h2>
           <table className="table my-3">
             <thead>
               <tr>
@@ -56,12 +87,19 @@ export default function CreatorRoom() {
           </table>
 
           {parseInt(localStorage.getItem('userId')) == apiData.creator_id ? (
-            <Link className='btn btn-primary my-5' to={`playground${id}`} >Start game</Link>
+            <Link className='btn btn-primary my-5' onClick={getPlayground}>
+              Start game
+            </Link>
           ) : (
             <p>Waiting for the game owner to start the game</p>
           )}
         </div>
       )}
+  <div  className ='d-none'>
+      {/* <Playground  apiData={apiData}></Playground> */}
+  </div>
+
+
     </>
   );
 }

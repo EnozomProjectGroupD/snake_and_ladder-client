@@ -67,9 +67,9 @@ function App() {
         {
           path: "/creatorroom/:id",
           element: (
-            <ProtectedRoute>
+            // <ProtectedRoute>
               <CreatorRoom></CreatorRoom>
-            </ProtectedRoute>
+            // </ProtectedRoute>
           ),
         },
         {

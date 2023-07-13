@@ -2,35 +2,39 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { ToastContainer, } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ErrorToast, SuccessToast } from "../Startgame";
 
+export let userToken = localStorage.getItem("userToken") || "";
 
 export default function Signup() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const [token, setToken] = useState("");
 
+  const navigate = useNavigate();
 
   async function handleSignup(formData) {
     setLoading(true);
-  
+
     try {
-      const {data} = await axios.post("http://localhost:3000/api/user/sign-up", formData);
-  
-       SuccessToast(data.message )
-      console.log(data)
-      await new Promise(resolve => setTimeout(resolve, 500)); // Wait for .5 second
-      localStorage.setItem('userToken',data.token)
-      localStorage.setItem('userName',data.user.name)
-      localStorage.setItem('userId',data.user.id)
-      // console.log('userToken',data.token)
-      // console.log('userName',data.user.name)
-      // console.log('userId',data.user.id)
+      const { data } = await axios.post(
+        "http://localhost:3000/api/user/sign-up",
+        formData
+      );
+
+      SuccessToast(data.message);
+      console.log(data);
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for .5 second
+      userToken = data.token;
+
+      localStorage.setItem("userToken", data.token);
+      localStorage.setItem("userName", data.user.name);
+      localStorage.setItem("userId", data.user.id);
       navigate("/startgame");
     } catch (error) {
-      ErrorToast(error.response.data.message )
-      console.log(error.response.data.message )       
+      ErrorToast(error.response.data.message);
+      console.log(error.response.data.message);
     }
 
     setLoading(false);
