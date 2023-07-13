@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { ToastContainer, } from 'react-toastify';
@@ -32,11 +32,10 @@ export default function Signup() {
       ErrorToast(error.response.data.message )
       console.log(error.response.data.message )       
     }
-  
+
     setLoading(false);
   }
-  
- 
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = {
@@ -45,17 +44,15 @@ export default function Signup() {
       password: event.target.password.value,
       confirmPassword: event.target.confirmPassword.value,
     };
-    // console.log(formData)
     handleSignup(formData);
   }
 
-  
   return (
     <>
       <Helmet>
         <title>Signup</title>
       </Helmet>
-    <ToastContainer />
+      <ToastContainer />
 
       <div className="align-items-center justify-content-center d-flex vh-100 flex-column">
         <h2>Sign up:</h2>
@@ -70,7 +67,13 @@ export default function Signup() {
           <label htmlFor="username" className="my-2">
             User Name:
           </label>
-          <input type="text"   id="username" name="username" className="w-75"required   />
+          <input
+            type="text"
+            id="username"
+            name="username"
+            className="w-75"
+            required
+          />
 
           <label htmlFor="password" className="my-2">
             Password:
@@ -83,7 +86,7 @@ export default function Signup() {
             required
           />
           <label htmlFor="password" className="my-2">
-           Confirm Password:
+            Confirm Password:
           </label>
           <input
             type="password"
@@ -92,13 +95,15 @@ export default function Signup() {
             className="w-75"
             required
           />
-{ loading? 
-          <button type="submit" className="btn btn-outline-danger my-2 w-50">
-           <i className="fas fa-spinner fa-spin mx-2"></i>Signup
-          </button>:
-          <button type="submit" className="btn btn-outline-danger my-2 w-50">
-          Signup
-          </button>}
+          {loading ? (
+            <button type="submit" className="btn btn-outline-danger my-2 w-50">
+              <i className="fas fa-spinner fa-spin mx-2"></i>Signup
+            </button>
+          ) : (
+            <button type="submit" className="btn btn-outline-danger my-2 w-50">
+              Signup
+            </button>
+          )}
         </form>
       </div>
     </>
